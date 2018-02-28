@@ -31,21 +31,21 @@ int reversew(int w){
 }
 
 /* Reverse double word (64  bits) */
-long long reversedw(long long dw){
+unsigned long long reversedw(long long dw){
 	int a, b;
-	long long final;
+	unsigned long long final;
 	
 	a = (int) ((dw & 0xffffffff00000000) >> 32);
 	b = (int) (dw & 0x00000000ffffffff);
 
 	final = reversew(b);
-        final = final << 32 | reverse(a);
+        final = final << 32 | reversew(a);
 
 	return final;
 }
 
 /* Printf bits of a double word */
-void printbit(long long x){
+void printbit(unsigned long long x){
 	int i;
 
 	for (i = 0; i <=63; i++){
@@ -57,12 +57,12 @@ void printbit(long long x){
 }
 
 int main(int argc, char **argv){
-	long long f;
+	unsigned long long f;
         if (!argv[1]){
                 printf("please use %s [word]\n", argv[0]);
                 return -1; 
         }
-	f = atoll(argv[1]);
+	f = strtoull(argv[1], NULL, 16);
         printf("Converting: 0x%016llx (", f);
 	printbit(f);
         f = reversedw(f);
