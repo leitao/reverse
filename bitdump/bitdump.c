@@ -12,7 +12,7 @@ void dumpall(int *b, int first, int last){
 
 	for (y = 0 ; y <= n; y++){
 		for (; z< y*(64/n) ; z++){
-			if (z >= first && z < last) {
+			if (z >= first && z <= last) {
 				f = f << 1;
 				printf("%2d ", b[z]);
 				if (b[z]){
@@ -24,7 +24,7 @@ void dumpall(int *b, int first, int last){
 		}
 		printf("\n");
 		for (; i< y*(64/n); i++){
-			if (i >= first && i < last)
+			if (i >= first && i <= last)
 				printf("%2d ", i);
 			else
 				printf("-- ");
@@ -42,12 +42,15 @@ int main(int argc, char **argv){
 	unsigned int b[64];
 	int i;
 
-	if (argc == 2) {
-		first = 0;
-		last = 64;
-	} else if (argc <4) {
+	if (argc < 2) {
 		printf("Please use %s <NUM> <initial bit> <final bit>\n", argv[0]);
 		exit(-1);
+	} else if (argc == 2) {
+		first = 0;
+		last = 64;
+	} else if (argc == 3) {
+		first = atoi(argv[2]);
+		last = first;
 	} else {
 		first = atoi(argv[2]);
 		last = atoi(argv[3]);
