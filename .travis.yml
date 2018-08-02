@@ -1,0 +1,5 @@
+language: bash
+os: linux-ppc64le
+dist: xenial
+script:
+- cd reverse && make
