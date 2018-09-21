@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #define PSL_VEC         0x02000000UL    /* AltiVec/SPE vector unit available */
 #define PSL_VSX         0x00800000UL    /* Vector-Scalar unit available */
@@ -149,12 +150,24 @@ void printbit(unsigned long long x){
 
 int main(int argc, char **argv){
 	unsigned long long f;
+	char *spec;
+
         if (!argv[1]){
                 printf("please use %s [word]\n", argv[0]);
                 return -1; 
         }
+	spec = argv[2];
+
 	f = strtoull(argv[1], NULL, 16);
         printf("MSR       : 0x%016llx\n", f);
+
+	if (spec != NULL) {
+		if (!strcmp(spec, "PR")) {
+			printf("MSR[PR] is %s\n", f & PSL_PR ? "Enabled" : "Disabled");
+			return 0;
+		}
+	}
+	
 	printf("Bitwise   : ");
 	printbit(f);
 	printf("\n");	
